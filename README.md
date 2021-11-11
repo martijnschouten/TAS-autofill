@@ -1,5 +1,5 @@
 # TAS-autofill
-This is a python script for automatically filling in the TAS system of the University of Twente
+This is a python script for automatically filling in the TAS system of the University of Twente. Note that using this tool is at your own risk. Filling in your password in a plain text file is serious security risk and it is recommended you delete the password afterwards.
 
 # Usage
 1. Download and unzip the latest release
