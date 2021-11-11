@@ -78,24 +78,29 @@ time.sleep(1)
 rows = driver.find_elements(By.NAME, "codeActiviteit")
 leave_row = -1
 project_row = -1
+holiday_row = -1
 for i1 in range(len(rows)):
     if rows[i1].get_attribute("value") == '000-Leave':
         leave_row = i1
     if rows[i1].get_attribute("value") == project_number:
         project_row = i1
+    if rows[i1].get_attribute("value") == '000-Holidays' or rows[i1].get_attribute("value") == '000-Bridge':
+        holiday_row = i1
 
 if project_row == -1:
     raise RuntimeError("Could not find a row related to your project number. Please add your project manually")
 
+leave = 0
 while True:
     empty = False
     for i1 in range(5):
-        if leave_row == -1:
-            project_cell = driver.find_element(By.ID, "urenDag"+str(i1+1)+'_'+str(project_row))
-            if project_cell.get_attribute('value')=='':
-                project_cell.send_keys(str(work_hours))
-                empty = True
-        else:
+        if holiday_row>-1:
+            holiday_cell = driver.find_element(By.ID,"urenDag"+str(i1+1)+'_'+str(leave_row))
+            holiday_string = holiday_cell.get_attribute("value")
+            if holiday_string != '' :
+                continue
+
+        if leave_row > -1:
             leave_cell = driver.find_element(By.ID,"urenDag"+str(i1+1)+'_'+str(leave_row))
             leave_string = leave_cell.get_attribute("value")
             if leave_string == '' :
@@ -103,10 +108,10 @@ while True:
             else:
                 leave = float(leave_string)
 
-            project_cell = driver.find_element(By.ID,"urenDag"+str(i1+1)+'_'+str(project_row))
-            if project_cell.get_attribute('value')=='':
-                project_cell.send_keys(str(work_hours-leave))
-                empty = True
+        project_cell = driver.find_element(By.ID,"urenDag"+str(i1+1)+'_'+str(project_row))
+        if project_cell.get_attribute('value')=='':
+            project_cell.send_keys(str(work_hours-leave))
+            empty = True
     if empty:
         driver.find_element(By.ID,"btnSave_0").click()
         time.sleep(0.1)
