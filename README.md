@@ -8,3 +8,5 @@ This is a python script for automatically filling in the TAS system of the Unive
 1. When you are asked to approve access to your account on your phone, approve
 1. Autofill will now automatically fill in a predefined number of hours every day until it runs into a week which has no empty days
 1. If it encounters any holidays or partial days of, it will fill in as many hours are need to get to this predefined number of hours
+1. If you want the autofiller to run automatically, open windows task scheduler
+1. Create a basic task and tell it to run the exe whenever you want it too run (not that you must be ready to approve on your phone)
